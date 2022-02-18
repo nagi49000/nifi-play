@@ -1,0 +1,16 @@
+version: "2.2"
+services:
+
+  nifi:
+    image: apache/nifi:1.15.3
+    ports:
+      - "8443:8443"
+    volumes:
+      - "./nifi-data:/opt/nifi/nifi-current/ls-target"
+    links:
+      - "nifi-registry:nifireg"
+
+  nifi-registry:
+    image: apache/nifi-registry:1.15.3
+    ports:
+      - "18080:18080"
