@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Nifi stuff
+services/nifi/
+services/nifi_registry/
