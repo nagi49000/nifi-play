@@ -26,7 +26,7 @@ services:
       # uncomment the next line after copying the /conf directory from the container to your local directory to persist NiFi flows
       #- ./nifi/conf:/opt/nifi/nifi-current/conf
     links:
-      - "nifi-registry:nifireg"
+      - "nifi-registry:nifi-reg"
 
   nifi-registry:
     image: apache/nifi-registry:1.15.3
