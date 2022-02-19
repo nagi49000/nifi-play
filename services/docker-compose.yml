@@ -10,6 +10,8 @@ services:
     environment:
       - SINGLE_USER_CREDENTIALS_USERNAME=admin
       - SINGLE_USER_CREDENTIALS_PASSWORD=letadminintonifi
+    depends_on:
+      - nifi-registry
     links:
       - "nifi-registry:nifireg"
 
