@@ -7,6 +7,9 @@ services:
       - "8443:8443"
     volumes:
       - "./nifi-data:/opt/nifi/nifi-current/ls-target"
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=admin
+      - SINGLE_USER_CREDENTIALS_PASSWORD=letadminintonifi
     links:
       - "nifi-registry:nifireg"
 
