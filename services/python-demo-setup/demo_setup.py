@@ -6,7 +6,7 @@ import requests
 logging.basicConfig(level=logging.DEBUG)
 
 nipyapi.config.nifi_config.host = "http://nifi:8080/nifi-api"
-nipyapi.config.registry_config.host = "http://nifi-reg:18080/nifi-registry-api"
+nipyapi.config.registry_config.host = "http://registry:18080/nifi-registry-api"
 
 status_code = 0
 status_code_reg = 0
