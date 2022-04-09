@@ -1,5 +1,6 @@
 import time
 import logging
+from datetime import datetime
 from nipyapi import config, canvas
 import requests
 
@@ -29,21 +30,35 @@ logging.warning(f"Starting NiPyApi demo run, root_pg_id {canvas.get_root_pg_id()
 location = (100, 200)
 
 # send in configuration details for customizing the processors
-processor_GenFlowFile_config = {"properties":{"generate-ff-custom-text":"hello world"},"schedulingPeriod":"10 sec","schedulingStrategy":"TIMER_DRIVEN"}
-processor_PutFile_config = {"properties":{"Directory":"${dir}","Conflict Resolution Strategy":"replace","Maximum File Count":100},"autoTerminatedRelationships":["failure","success"]}
+processor_GenFlowFile_config = {
+    "properties" : {
+        "generate-ff-custom-text" : "hello world"
+    },
+    "schedulingPeriod" : "3 sec",
+    "schedulingStrategy" : "TIMER_DRIVEN"
+}
+processor_PutFile_config = {
+    "properties" : {
+        "Directory" : "${dir}",
+        "Conflict Resolution Strategy" : "replace",
+        "Maximum File Count" : 100
+    },
+    "autoTerminatedRelationships" : ["failure", "success"]
+}
 
 # get the root processgroup ID
 root_id = canvas.get_root_pg_id()
 
 # get the root process group
-root_process_group = canvas.get_process_group(root_id, 'id')
+root_process_group = canvas.get_process_group(root_id, "id")
 
 # create the processor group
-new_processor_group = canvas.create_process_group(root_process_group, 'test_process_group', location, 'this is a test')
+t = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+new_processor_group = canvas.create_process_group(root_process_group, f"test_process_group_{t}", location, f"this is a test created {t}")
 
 # get the processors
-processor_GenFlowFile = canvas.get_processor_type('org.apache.nifi.processors.standard.GenerateFlowFile', identifier_type='name')
-processor_PutFile = canvas.get_processor_type('org.apache.nifi.processors.standard.PutFile', identifier_type='name')
+processor_GenFlowFile = canvas.get_processor_type("org.apache.nifi.processors.standard.GenerateFlowFile", identifier_type="name")
+processor_PutFile = canvas.get_processor_type("org.apache.nifi.processors.standard.PutFile", identifier_type="name")
 
 # put processors on canvas in specificed process group
 location = (900, 100)
@@ -52,19 +67,15 @@ location = (100, 700)
 PutFile = canvas.create_processor(new_processor_group, processor_PutFile, location, name=None, config=processor_PutFile_config)
 
 # canvas create connection between processors
-canvas.create_connection(GenFlowFile, PutFile ,relationships=None, name="linkage")
+canvas.create_connection(GenFlowFile, PutFile, relationships=None, name="linkage")
 
 # get variable registry
 var_reg = canvas.get_variable_registry(new_processor_group, True)
 
 # set new variables from incoming file
-canvas.update_variable_registry(new_processor_group,([('dir', '/tmp/test')]))
+canvas.update_variable_registry(new_processor_group,([("dir", "/tmp/test_dst")]))
 
 # start process group
 canvas.schedule_process_group(new_processor_group.id, True)
 
-# demo and api calls run by import
-# from nipyapi import demo
-# from nipyapi.demo.secure_connection import *
-# from nipyapi.demo.console import *
 logging.warning(f"demo files created: {dir()}")
