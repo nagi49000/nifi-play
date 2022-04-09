@@ -25,3 +25,4 @@ The nipyapi demo will create files containing "hello world", and put them in a f
 ```
 docker exec services_nifi_1 ls -aslFrt /tmp/test_dst/
 ```
+which will peak at 100 files (and apply back-pressure through the Nifi flow).
