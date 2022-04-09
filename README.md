@@ -31,4 +31,4 @@ The processor group (called "test_process_group_<datetime>") should be visible o
 ```
 http://localhost:8091/nifi/
 ```
-which you should be able to double click on, and explore the processors in the processor group (and see the files being generated and put).
+You should be able to double click on the processor group, and explore the processors in the processor group (and see the files being generated and put).
