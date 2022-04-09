@@ -18,3 +18,4 @@ Access to the nifi and nifi-registry APIs can be verified by
 curl http://localhost:18080/nifi-registry-api/access
 curl http://localhost:8091/nifi-api/system-diagnostics
 ```
+

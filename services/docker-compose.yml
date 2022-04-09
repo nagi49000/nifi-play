@@ -20,7 +20,7 @@ services:
       # - SINGLE_USER_CREDENTIALS_PASSWORD=letadminintonifi
     depends_on:
       - nifi-registry
-    # uncomment volumes for poersistence
+    # uncomment volumes for persistence
     #volumes:
       #- ./nifi/database_repository:/opt/nifi/nifi-current/database_repository
       #- ./nifi/flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
